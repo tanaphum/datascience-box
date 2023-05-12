@@ -6,10 +6,13 @@ output:
     css: ../hw.css
     tufte_variant: "envisioned"
     highlight: pygments
-link-citations: yes
+link-citations: true
 ---
 
 ```{r include = FALSE}
+# install.packages(c("openintro","airports","cherryblossom","usdata","ggimage","ggfun","ggplotify","gridGraphics","yulab.utils","magick","curl","fivethirtyeight","robotstxt","rvest","spiderbar","vroom","bit64","bit","crayon"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
+# withr::with_libpaths(new="/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32",devtools::install_github("rstudio-education/dsbox"))
+
 knitr::opts_chunk$set(
   eval = FALSE,
   out.width = "80%",

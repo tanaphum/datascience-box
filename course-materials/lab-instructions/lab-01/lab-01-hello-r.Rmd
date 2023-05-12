@@ -5,10 +5,11 @@ output:
     css: ../lab.css
     tufte_variant: "envisioned"
     highlight: pygments
-link-citations: yes
+link-citations: true
 ---
 
 ```{marginfigure}
+# install.packages(c("datasauRus","mosaicData","selectr","skimr","repr"."base64enc"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
 R is the name of the programming language itself and RStudio is a convenient interface.
 ```
 

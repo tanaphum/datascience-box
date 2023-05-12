@@ -6,6 +6,7 @@ editor: visual
 ---
 
 ```{r}
+# install.packages(c("tidyverse","ggplot2","gtable","scales","munsell","colorspace","readr","hms","tzdb","forcats","lubridate","timechange","DT","labeling","farver","crosstalk","unvotes","ggrepel","Rcpp","viridisLite","tidymodels","broom","backports","prodlim","data.table","jquerylib","lava","future.apply","future","globals","listenv","parallelly","foreach","iterators","schrute"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
 #| label: load-packages
 #| warning: false
 #| message: false
@@ -14,6 +15,7 @@ library(tidyverse)
 library(tidymodels)
 library(schrute)
 library(lubridate)
+
 ```
 
 Use `theoffice` data from the [**schrute**](https://bradlindblad.github.io/schrute/) package to predict IMDB scores for episodes of The Office.
@@ -131,7 +133,7 @@ set.seed(1122)
 
 TO DO: See what `___` is.
 
-````r
+``` r
 #| label: old-model
 #| error: true
 
@@ -157,4 +159,4 @@ office_fit_old <- office_wflow_old %>%
 tidy(office_fit_old)
 
 ___
-````
+```
