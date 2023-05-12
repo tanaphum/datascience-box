@@ -1,0 +1,10 @@
+can_fetch               Test URL paths against a 'robxp' 'robots.txt'
+                        object
+crawl_delays            Retrieve all agent crawl delay values in a
+                        'robxp' 'robots.txt' object
+robxp                   Parse a 'robots.txt' file & create a 'robxp'
+                        object
+sitemaps                Retrieve a character vector of sitemaps from a
+                        parsed robots.txt object
+spiderbar               Parse and Test Robots Exclusion Protocol Files
+                        and Rules

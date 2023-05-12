@@ -1,0 +1,17 @@
+usdata-package	usdata-package
+abbr2state	abbr2state
+county	county
+county_2019	county_2019
+county_complete	county_complete
+govrace10	govrace10
+houserace10	houserace10
+prrace08	prrace08
+senaterace10	senaterace10
+state2abbr	state2abbr
+state_stats	state_stats
+urban.owner	urban_owner
+urban_owner	urban_owner
+urban_rural_pop	urban_rural_pop
+usdata	usdata-package
+voter_count	voter_count
+vote_nsa	vote_nsa

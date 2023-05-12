@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Using schrute</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using schrute</h1>
+
+
+
+<div id="what" class="section level1">
+<h1>What</h1>
+<p>This is a package that does/has only one thing: the complete
+transcriptions of all episodes of <a href="https://www.imdb.com/title/tt0386676/">The Office!</a> (US
+version).</p>
+<p>Use this data set to master NLP or text analysis. Let’s scratch the
+surface of the subject with a few examples from the excellent <a href="https://www.tidytextmining.com/">Text Mining with R</a> book, by
+Julia Silge and David Robinson.</p>
+<p>First install the package from CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(schrute)</span></code></pre></div>
+<p>There is only one data set with the schrute package; assign it to a
+variable</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> schrute<span class="sc">::</span>theoffice</span></code></pre></div>
+<p>Take a peek at the format:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(mydata)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 55,130</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Columns: 12</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ index            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16…</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ season           &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ episode          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ episode_name     &lt;chr&gt; &quot;Pilot&quot;, &quot;Pilot&quot;, &quot;Pilot&quot;, &quot;Pilot&quot;, &quot;Pilot&quot;, &quot;Pilot&quot;,…</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ director         &lt;chr&gt; &quot;Ken Kwapis&quot;, &quot;Ken Kwapis&quot;, &quot;Ken Kwapis&quot;, &quot;Ken Kwapis…</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ writer           &lt;chr&gt; &quot;Ricky Gervais;Stephen Merchant;Greg Daniels&quot;, &quot;Ricky…</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ character        &lt;chr&gt; &quot;Michael&quot;, &quot;Jim&quot;, &quot;Michael&quot;, &quot;Jim&quot;, &quot;Michael&quot;, &quot;Micha…</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ text             &lt;chr&gt; &quot;All right Jim. Your quarterlies look very good. How …</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ text_w_direction &lt;chr&gt; &quot;All right Jim. Your quarterlies look very good. How …</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ imdb_rating      &lt;dbl&gt; 7.6, 7.6, 7.6, 7.6, 7.6, 7.6, 7.6, 7.6, 7.6, 7.6, 7.6…</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ total_votes      &lt;int&gt; 3706, 3706, 3706, 3706, 3706, 3706, 3706, 3706, 3706,…</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $ air_date         &lt;chr&gt; &quot;2005-03-24&quot;, &quot;2005-03-24&quot;, &quot;2005-03-24&quot;, &quot;2005-03-24…</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> mydata <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(season <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(episode <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="1%" />
+<col width="2%" />
+<col width="2%" />
+<col width="4%" />
+<col width="3%" />
+<col width="14%" />
+<col width="3%" />
+<col width="27%" />
+<col width="27%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">index</th>
+<th align="right">season</th>
+<th align="right">episode</th>
+<th align="left">episode_name</th>
+<th align="left">director</th>
+<th align="left">writer</th>
+<th align="left">character</th>
+<th align="left">text</th>
+<th align="left">text_w_direction</th>
+<th align="right">imdb_rating</th>
+<th align="right">total_votes</th>
+<th align="left">air_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Pilot</td>
+<td align="left">Ken Kwapis</td>
+<td align="left">Ricky Gervais;Stephen Merchant;Greg Daniels</td>
+<td align="left">Michael</td>
+<td align="left">All right Jim. Your quarterlies look very good. How are
+things at the library?</td>
+<td align="left">All right Jim. Your quarterlies look very good. How are
+things at the library?</td>
+<td align="right">7.6</td>
+<td align="right">3706</td>
+<td align="left">2005-03-24</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Pilot</td>
+<td align="left">Ken Kwapis</td>
+<td align="left">Ricky Gervais;Stephen Merchant;Greg Daniels</td>
+<td align="left">Jim</td>
+<td align="left">Oh, I told you. I couldn’t close it. So…</td>
+<td align="left">Oh, I told you. I couldn’t close it. So…</td>
+<td align="right">7.6</td>
+<td align="right">3706</td>
+<td align="left">2005-03-24</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Pilot</td>
+<td align="left">Ken Kwapis</td>
+<td align="left">Ricky Gervais;Stephen Merchant;Greg Daniels</td>
+<td align="left">Michael</td>
+<td align="left">So you’ve come to the master for guidance? Is this what
+you’re saying, grasshopper?</td>
+<td align="left">So you’ve come to the master for guidance? Is this what
+you’re saying, grasshopper?</td>
+<td align="right">7.6</td>
+<td align="right">3706</td>
+<td align="left">2005-03-24</td>
+</tr>
+</tbody>
+</table>
+<p>So what we have is the season, episode number and name, character,
+the line spoken and the line spoken with the stage direction (cue).</p>
+<p>We can tokenize all of the lines with a few lines from the tidytext
+package:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>token.mydata <span class="ot">&lt;-</span> mydata <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  tidytext<span class="sc">::</span><span class="fu">unnest_tokens</span>(word, text)</span></code></pre></div>
+<p>This increases our data set to 571612 records, where each record
+contains a word from the script.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> token.mydata <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(season <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(episode <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="2%" />
+<col width="3%" />
+<col width="3%" />
+<col width="5%" />
+<col width="5%" />
+<col width="20%" />
+<col width="4%" />
+<col width="36%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="2%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">index</th>
+<th align="right">season</th>
+<th align="right">episode</th>
+<th align="left">episode_name</th>
+<th align="left">director</th>
+<th align="left">writer</th>
+<th align="left">character</th>
+<th align="left">text_w_direction</th>
+<th align="right">imdb_rating</th>
+<th align="right">total_votes</th>
+<th align="left">air_date</th>
+<th align="left">word</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Pilot</td>
+<td align="left">Ken Kwapis</td>
+<td align="left">Ricky Gervais;Stephen Merchant;Greg Daniels</td>
+<td align="left">Michael</td>
+<td align="left">All right Jim. Your quarterlies look very good. How are
+things at the library?</td>
+<td align="right">7.6</td>
+<td align="right">3706</td>
+<td align="left">2005-03-24</td>
+<td align="left">all</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Pilot</td>
+<td align="left">Ken Kwapis</td>
+<td align="left">Ricky Gervais;Stephen Merchant;Greg Daniels</td>
+<td align="left">Michael</td>
+<td align="left">All right Jim. Your quarterlies look very good. How are
+things at the library?</td>
+<td align="right">7.6</td>
+<td align="right">3706</td>
+<td align="left">2005-03-24</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">Pilot</td>
+<td align="left">Ken Kwapis</td>
+<td align="left">Ricky Gervais;Stephen Merchant;Greg Daniels</td>
+<td align="left">Michael</td>
+<td align="left">All right Jim. Your quarterlies look very good. How are
+things at the library?</td>
+<td align="right">7.6</td>
+<td align="right">3706</td>
+<td align="left">2005-03-24</td>
+<td align="left">jim</td>
+</tr>
+</tbody>
+</table>
+<p>If we want to analyze the entire data set, we need to remove some
+stop words first:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>stop_words <span class="ot">&lt;-</span> tidytext<span class="sc">::</span>stop_words</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>tidy.token.mydata <span class="ot">&lt;-</span> token.mydata <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">&quot;word&quot;</span>)</span></code></pre></div>
+<p>And then see what the most common words are:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tidy.token.mydata <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 18,960 × 2</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    word        n</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 yeah     2930</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 hey      2232</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 michael  1860</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 uh       1463</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 gonna    1405</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 dwight   1345</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 jim      1162</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 time     1149</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 pam      1043</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 guys      947</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 18,950 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tidy.token.mydata <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">400</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">word =</span> stats<span class="sc">::</span><span class="fu">reorder</span>(word, n)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(word, n)) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">xlab</span>(<span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Feel free to keep going with this. Now that you have the time line
+(episode, season) and the character for each line and word in the
+series, you can perform an unlimited number of analyses. Some ideas: -
+Sentiment by character - Sentiment by character by season - Narcissism
+by season (ahem.. Nard Dog season 8-9) - Lines by character - Etc.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

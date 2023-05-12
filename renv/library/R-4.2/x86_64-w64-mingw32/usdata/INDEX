@@ -1,0 +1,18 @@
+abbr2state              Convert state abbreviations to names
+county                  United States Counties
+county_2019             American Community Survey 2019
+county_complete         United States Counties
+govrace10               Election results for 2010 Governor races in the
+                        U.S.
+houserace10             Election results for the 2010 U.S. House of
+                        Represenatives races
+prrace08                Election results for the 2008 U.S. Presidential
+                        race
+senaterace10            Election results for the 2010 U.S. Senate races
+state2abbr              Convert state names to abbreviations
+state_stats             State-level data
+urban_owner             Summary of many state-level variables
+urban_rural_pop         State summary info
+vote_nsa                Predicting who would vote for NSA Mass
+                        Surveillance
+voter_count             US Voter Turnout Data.

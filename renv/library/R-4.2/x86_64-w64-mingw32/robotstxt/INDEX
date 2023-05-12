@@ -1,0 +1,31 @@
+%>%                     re-export magrittr pipe operator
+as.list.robotstxt_text
+                        Method as.list() for class robotstxt_text
+fix_url                 fix_url
+get_robotstxt           downloading robots.txt file
+get_robotstxts          function to get multiple robotstxt files
+guess_domain            function guessing domain from path
+http_domain_changed     http_domain_changed
+http_subdomain_changed
+                        http_subdomain_changed
+http_was_redirected     http_was_redirected
+is_suspect_robotstxt    is_suspect_robotstxt
+is_valid_robotstxt      function that checks if file is valid /
+                        parsable robots.txt file
+list_merge              Merge a number of named lists in sequential
+                        order
+null_to_defeault        null_to_defeault
+parse_robotstxt         function parsing robots.txt
+paths_allowed           check if a bot has permissions to access
+                        page(s)
+paths_allowed_worker_spiderbar
+                        paths_allowed_worker spiderbar flavor
+print.robotstxt         printing robotstxt
+print.robotstxt_text    printing robotstxt_text
+remove_domain           function to remove domain from path
+request_handler_handler
+                        request_handler_handler
+robotstxt               Generate a representations of a robots.txt file
+rt_cache                get_robotstxt() cache
+rt_last_http            storage for http request response objects
+rt_request_handler      rt_request_handler
