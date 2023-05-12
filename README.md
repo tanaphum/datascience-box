@@ -40,9 +40,24 @@ link-citations: true
 ```
 install packages
 ```{r}
-#install.packages(c("openintro","airports","cherryblossom","usdata","ggimage","ggfun","ggplotify","gridGraphics","yulab.utils","magick","curl","fivethirtyeight","robotstxt","rvest","spiderbar","vroom","bit64","bit","crayon"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
+install.packages(c("openintro","airports","cherryblossom","usdata","ggimage","ggfun","ggplotify","gridGraphics","yulab.utils","magick","curl","fivethirtyeight","robotstxt","rvest","spiderbar","vroom","bit64","bit","crayon"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
 
 withr::with_libpaths(new="/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32",devtools::install_github("rstudio-education/dsbox"))
+```
+
+###  Render lab-instructions
+Error
+```{r}
+ERROR: Validation of YAML front matter failed.
+ERROR: (line 8, columns 17--19) Field "link-citations" has value yes, which must instead be `true` or `false`
+```
+Change link-citations form "yes" to "true"
+```{r}
+link-citations: true
+```
+install packages
+```{r}
+install.packages(c("datasauRus","mosaicData","selectr","skimr","repr"."base64enc"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
 ```
 ## Data Science Course in a Box
 
