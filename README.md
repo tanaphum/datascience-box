@@ -1,10 +1,30 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/faea2121-c6bb-4355-bbf4-d5afb9dd0224/deploy-status)](https://app.netlify.com/sites/datasciencebox/deploys)
 
 ## Install Packages For render
+
 ### Render Web
+
 ```{r}
 install.packages(c("rmarkdown","digest","jsonlite","htmltools","evaluate","RColorBrewer","visNetwork","fastmap","knitr","xfun","htmlwidgets","yaml","DiagrammeR","magrittr","stringr","stringi","lifecycle","vctrs","dplyr","R6","generics","pillar","cli","fansi","utf8","tibble","pkgconfig","tidyselect","purrr","withr","tidyr","rstudioapi","ellipsis"),
-"D:/workshop/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
+"/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
+```
+### Render Application Exercises
+
+#### install rtools
+
+https://cran.r-project.org/bin/windows/Rtools/
+
+```{r}
+install.packages(c("tidyverse","ggplot2","gtable","scales","munsell","colorspace","readr","hms","tzdb","forcats","lubridate","timechange","DT","labeling","farver","crosstalk","unvotes","ggrepel","Rcpp","viridisLite","tidymodels","broom","backports","prodlim","data.table","jquerylib","lava","future.apply","future","globals","listenv","parallelly","foreach","iterators","schrute"), "/datascience-box-main/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32")
+
+# if you don't have withr
+install.packages(withr)
+
+# if you don't have devtools
+install.packages(devtools)
+
+withr::with_libpaths(new="/datascience-box-main/renv/library/R-4.2/x86_64-w64-mingw32",devtools::install_github("RamiKrispin/coronavirus"))
+
 ```
 ## Data Science Course in a Box
 
